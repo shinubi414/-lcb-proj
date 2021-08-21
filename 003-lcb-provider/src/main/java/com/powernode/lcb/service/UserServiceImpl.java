@@ -41,21 +41,21 @@ public class UserServiceImpl implements UserService {
         map.put("mobile",phone);
         String result = "";
         try {
-            result = HttpClientUtils.doGet("https://way.jd.com/chuangxin/VerCodesms",map);
-            System.out.println(result);
-//            result = "{\n" +
-//                    "    \"code\": \"10000\",\n" +
-//                    "    \"charge\": false,\n" +
-//                    "    \"remain\": 1305,\n" +
-//                    "    \"msg\": \"查询成功\",\n" +
-//                    "    \"result\": {\n" +
-//                    "        \"ReturnStatus\": \"Success\",\n" +
-//                    "        \"Message\": \"ok\",\n" +
-//                    "        \"RemainPoint\": 420842,\n" +
-//                    "        \"TaskID\": 18424321,\n" +
-//                    "        \"SuccessCounts\": 1\n" +
-//                    "    }\n" +
-//                    "}";
+//            result = HttpClientUtils.doGet("https://way.jd.com/chuangxin/VerCodesms",map);
+
+            result = "{\n" +
+                    "    \"code\": \"10000\",\n" +
+                    "    \"charge\": false,\n" +
+                    "    \"remain\": 1305,\n" +
+                    "    \"msg\": \"查询成功\",\n" +
+                    "    \"result\": {\n" +
+                    "        \"ReturnStatus\": \"Success\",\n" +
+                    "        \"Message\": \"ok\",\n" +
+                    "        \"RemainPoint\": 420842,\n" +
+                    "        \"TaskID\": 18424321,\n" +
+                    "        \"SuccessCounts\": 1\n" +
+                    "    }\n" +
+                    "}";
             JSONObject jsonObject = JSONObject.parseObject(result);
             String returnStatus = jsonObject.getJSONObject("result").getString("ReturnStatus");
             System.out.println(returnStatus);
