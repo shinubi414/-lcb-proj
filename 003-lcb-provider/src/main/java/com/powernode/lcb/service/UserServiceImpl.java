@@ -33,19 +33,33 @@ public class UserServiceImpl implements UserService {
         String appkey = "061a4d7f0f6fc9fba8695111cbb9d38e";
         //生成四位随机数字字符串
         String code = RandomStringUtils.randomNumeric(4);
-        System.out.println("验证码是");
-        String content = "【创信】你的验证码是：" + code + ",1分钟内有效";
+        System.out.println("你的验证码是：" + code);
+        String content = "【创信】你的验证码是：" + code;
         Map<String,String> map = new HashMap<>();
-        map.put("mobile",phone);
         map.put("content",content);
         map.put("appkey",appkey);
+        map.put("mobile",phone);
         String result = "";
         try {
-            result = HttpClientUtils.doGet("https://way.jd.com/chuangxin/dxjk",map);
+            result = HttpClientUtils.doGet("https://way.jd.com/chuangxin/VerCodesms",map);
             System.out.println(result);
+//            result = "{\n" +
+//                    "    \"code\": \"10000\",\n" +
+//                    "    \"charge\": false,\n" +
+//                    "    \"remain\": 1305,\n" +
+//                    "    \"msg\": \"查询成功\",\n" +
+//                    "    \"result\": {\n" +
+//                    "        \"ReturnStatus\": \"Success\",\n" +
+//                    "        \"Message\": \"ok\",\n" +
+//                    "        \"RemainPoint\": 420842,\n" +
+//                    "        \"TaskID\": 18424321,\n" +
+//                    "        \"SuccessCounts\": 1\n" +
+//                    "    }\n" +
+//                    "}";
             JSONObject jsonObject = JSONObject.parseObject(result);
-            String returnStatus = jsonObject.getString("ReturnStatus");
-            if ("success".equals(returnStatus)){
+            String returnStatus = jsonObject.getJSONObject("result").getString("ReturnStatus");
+            System.out.println(returnStatus);
+            if ("Success".equals(returnStatus)){
                 redisTemplate.setKeySerializer(new StringRedisSerializer());
                 redisTemplate.opsForValue().set(phone,code,1,TimeUnit.MINUTES);
                 result = "success";
