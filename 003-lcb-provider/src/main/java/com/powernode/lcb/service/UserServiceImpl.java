@@ -5,12 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.powernode.lcb.common.constant.Constants;
 import com.powernode.lcb.common.util.HttpClientUtils;
 import com.powernode.lcb.mapper.UserMapper;
+import com.powernode.lcb.model.User;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -70,5 +73,40 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public boolean checkSmsCode(String phone,String code) {
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        String smsCode = (String) redisTemplate.opsForValue().get(phone);
+        if (smsCode == null || !code.equals(smsCode)){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        user.setAddTime(new Date());
+        //md5加密
+        String password = DigestUtils.md5Hex(user.getLoginPassword());
+        user.setLoginPassword(password);
+        int result = userMapper.insert(user);
+        if (result > 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean queryByPhone(String phone) {
+        int result = userMapper.selectByPhone(phone);
+        if (result > 0) {
+            return false;
+        }else {
+            return true;
+        }
     }
 }

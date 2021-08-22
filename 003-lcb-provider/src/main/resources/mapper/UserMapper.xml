@@ -14,6 +14,12 @@
   <sql id="Base_Column_List">
     id, phone, login_password, name, id_card, add_time, last_login_time, header_image
   </sql>
+  <select id="selectByPhone" resultType="int">
+    select
+    count(*)
+    from u_user
+    where phone = #{phone}
+  </select>
   <select id="selectUserCount" resultType="long">
     select count(*) from u_user
   </select>

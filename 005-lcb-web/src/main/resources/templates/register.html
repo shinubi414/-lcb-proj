@@ -102,8 +102,19 @@
 <!--页脚end-->
 
 <!--遮罩层start-->
-<div id="mask" class="dialog-overlay" style="display:none;"></div>
+<div id='mask' style='position: absolute; left: 0px; top: 0px; width: 100%; z-index: 9999; height: 568px;display:none;'>
+    <div style="position: absolute; left: 0px; top: 0px; width: 100%; background: rgba(0, 0, 0,1); opacity: 0.5; z-index: 9999; height: 937px;"></div>
+    <div style="position: absolute; width: 327px; height: 208px;background: #fff; border-radius: 20px;overflow: hidden;z-index: 10000; left: 50%; top: 50%; transform: translate(-50%, -50%);padding:25px">
+        <div style='width:100%;height: 20px;font-size: 20px;color: #282828;text-align:center;'>服务协议与隐私政策</div>
+        <div style='width:100%;height: 127px;font-size: 13px;color: #282828;text-align:left;margin-top:18px;'>欢迎使用动力金融网,在你使用动力金融网服务前，请认真阅读《服务协议》和《隐私协议》全部条款。我们非常重视您的用户权益与个人信息的保护，我们将通过上诉协议向你说明我们如何为你提供服务并保障你的用户权益，如你同意，请点击“同意并继续”接受我们的服务。</div>
+        <div style="text-align: center">
+            <input id="agreeBtn" style="width: 121px;height: 28px;font-size: 13px;color: #ffffff;background-color: #0983f8;border-radius: 14px" type="button" value="同意并继续"/>&nbsp;&nbsp;
+            <input id="disagreeBtn" style="width: 121px;height: 28px;font-size: 13px;color: #ffffff;background-color: #0983f8;border-radius: 14px" type="button" value="不同意并退出"/>
+        </div>
+    </div>
+</div>
 <!--遮罩层end-->
+
 
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.powernode.lcb.mapper;
 
 import com.powernode.lcb.model.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,4 +17,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     long selectUserCount();
+
+    int selectByPhone(@Param("phone") String phone);
 }

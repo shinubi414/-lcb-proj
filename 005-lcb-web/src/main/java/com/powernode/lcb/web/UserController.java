@@ -1,6 +1,7 @@
 package com.powernode.lcb.web;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.powernode.lcb.model.User;
 import com.powernode.lcb.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,5 +34,27 @@ public class UserController {
         return result;
     }
 
+    @RequestMapping("/checkMessageCode")
+    @ResponseBody
+    public boolean checkMessageCode(String phone,String code){
+        return userService.checkSmsCode(phone,code);
+    }
+
+    @RequestMapping("/register")
+    @ResponseBody
+    public boolean register(User user){
+        return userService.addUser(user);
+    }
+
+    @RequestMapping("/checkPhone")
+    @ResponseBody
+    public boolean checkPhone(String phone){
+        return userService.queryByPhone(phone);
+    }
+
+    @RequestMapping("/realName")
+    public String realName(){
+        return "realName";
+    }
 
 }
