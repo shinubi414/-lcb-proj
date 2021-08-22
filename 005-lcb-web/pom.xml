@@ -60,6 +60,14 @@
             <version>5.7.2</version>
             <scope>compile</scope>
         </dependency>
+
+        <!--图片验证码-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>4.6.8</version>
+        </dependency>
+
     </dependencies>
 
     <build>
