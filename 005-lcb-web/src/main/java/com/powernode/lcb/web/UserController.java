@@ -9,7 +9,7 @@ import com.powernode.lcb.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -111,6 +111,28 @@ public class UserController {
     @RequestMapping("/realName")
     public String realName(){
         return "realName";
+    }
+
+    @RequestMapping("/doRealName")
+    @ResponseBody
+    public String doRealName(String phone, String realName, String idCard, String captcha, HttpSession session){
+        String code = (String) session.getAttribute("code");
+        if (code.equals(captcha)){
+            return userService.realName(phone, realName, idCard);
+        }else {
+            return "验证码错误";
+        }
+    }
+
+    @RequestMapping("/loan/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/index";
+    }
+
+    @RequestMapping("/loan/myCenter")
+    public String goMyCenter(){
+        return "myCenter";
     }
 
 }

@@ -26,7 +26,7 @@
             </div>
             <div class="login-cnt reg-body clearfix">
                 <div class="fl">
-                    <div class="reg-link">暂不认证？<a th:href="@{/index}">跳过</a></div>
+                    <div class="reg-link">暂不认证？<a th:href="@{/loan/page/login}">跳过</a></div>
                     <div class="login-form reg-form">
                         <h2>实名认证</h2>
 
@@ -53,7 +53,7 @@
                             <label>图形验证码</label>
                             <div class="yzm-box">
                                 <input id="captcha" name="captcha" type="text" class="yzm" maxlength="10" placeholder="点击右侧图片可刷新" onblur="checkCaptcha();"/>
-                                <a style='cursor:pointer;'></a>
+                                <img src="/lcb/jcaptcha/captcha" onclick="this.src='/lcb/jcaptcha/captcha?'+Math.random()" id="imgCode" style="cursor:pointer;border:0; display:inline;vertical-align:middle;"/>
                             </div>
                             <span id="captchaOk" class="ok" style="display:none;"></span>
                             <div id="captchaErr" class="form-hint" style="display:none;"></div>

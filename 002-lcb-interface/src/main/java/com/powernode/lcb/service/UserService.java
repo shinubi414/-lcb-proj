@@ -15,4 +15,7 @@ public interface UserService {
     boolean queryByPhone(String phone);
 
     User login(String phone,String password);
+
+    String realName(String phone,String realName,String idCard);
+
 }

@@ -43,14 +43,14 @@ $(function(){
         </ul>
         <div class="login-right">
             	<!-- 未登录start -->
-            	<div class="no-login"><a th:href="@{/loan/page/register}" class="btn-reg">注册</a><a th:href="@{/loan/page/login}" class="btn-login">登录</a></div>
+            	<div th:if="${session.user == null}" class="no-login"><a th:href="@{/loan/page/register}" class="btn-reg">注册</a><a th:href="@{/loan/page/login}" class="btn-login">登录</a></div>
             	<!-- 未登录end -->
             	
                 <!--登录后begin-->
-               <!--  
-                <div class="logged">
+
+                <div th:if="${session.user != null}" class="logged">
                     <div class="userinfo-up">
-                        <a href="loan/myCenter" class="user-phone">13788889999</a><a href="/webPage/account/member_systems.html" class="user-vip" id="member">VIP1</a><i></i>
+                        <a href="loan/myCenter" class="user-phone">13788889999</a><a href="/lcb/" class="user-vip" id="member">VIP1</a><i></i>
                     </div>
                     <div class="userinfo-drop-down" style="height: 0px;">
                         <div class="down-bk">
@@ -64,7 +64,7 @@ $(function(){
                         </div>
                     </div>
                 </div>
-                 -->
+
                 <!--登录后end-->
         </div>
     </div>

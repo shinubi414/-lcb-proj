@@ -18,7 +18,7 @@ public interface UserMapper {
 
     long selectUserCount();
 
-    int selectByPhone(@Param("phone") String phone);
+    User selectByPhone(@Param("phone") String phone);
 
     User selectByPhoneAndPassword(@Param("phone")String phone,@Param("password")String password);
 }

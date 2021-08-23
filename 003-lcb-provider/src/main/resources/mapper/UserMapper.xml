@@ -20,9 +20,9 @@
     from u_user
     where phone = #{phone} and login_password = #{password}
   </select>
-  <select id="selectByPhone" resultType="int">
+  <select id="selectByPhone" resultMap="BaseResultMap">
     select
-    count(*)
+    <include refid="Base_Column_List" />
     from u_user
     where phone = #{phone}
   </select>

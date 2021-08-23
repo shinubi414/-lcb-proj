@@ -39,7 +39,7 @@ $(function () {
 		var password = $('#loginPassword').val()
 		var captcha = $('#captcha').val()
 
-		if (/^[ ]*$/.test(phone)) {
+		if (/^[ ]*$/.test(phone) || phone == "") {
 			showError("phone","请输入手机号")
 			return;
 		}else if (!/^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/.test(phone)) {
