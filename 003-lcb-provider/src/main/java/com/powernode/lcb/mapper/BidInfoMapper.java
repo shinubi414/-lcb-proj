@@ -23,4 +23,6 @@ public interface BidInfoMapper {
     List<InvestTopVO> selectBidMoneyRank(int num);
 
     List<BidInfo> selectByBidLoanId(int loanId);
+
+    List<BidInfo> selectByUId(int uId);
 }

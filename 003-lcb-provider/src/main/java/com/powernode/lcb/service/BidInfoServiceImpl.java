@@ -48,4 +48,10 @@ public class BidInfoServiceImpl implements  BidInfoService {
         }
         return bidInfoList;
     }
+
+    @Override
+    public List<BidInfo> queryByUId(int uId) {
+
+        return bidInfoMapper.selectByUId(uId);
+    }
 }

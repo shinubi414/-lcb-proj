@@ -12,7 +12,7 @@ public interface UserService {
 
     boolean addUser(User user);
 
-    boolean queryByPhone(String phone);
+    User queryByPhone(String phone);
 
     User login(String phone,String password);
 

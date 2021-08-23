@@ -20,6 +20,16 @@ public class IncomeRecord implements Serializable {
 
     private Integer incomeStatus;
 
+    private String productName;
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
     public Integer getId() {
         return id;
     }

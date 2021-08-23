@@ -4,9 +4,17 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.powernode.lcb.common.constant.Constants;
+import com.powernode.lcb.model.BidInfo;
+import com.powernode.lcb.model.IncomeRecord;
+import com.powernode.lcb.model.RechargeRecord;
 import com.powernode.lcb.model.User;
+import com.powernode.lcb.service.BidInfoService;
+import com.powernode.lcb.service.IncomeRecordService;
+import com.powernode.lcb.service.RechargeRecordService;
 import com.powernode.lcb.service.UserService;
+import org.apache.commons.codec.digest.MurmurHash3;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,12 +24,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     @Reference(interfaceClass = UserService.class,version = "1.0.0",timeout = 15000)
-    UserService userService;
+    private UserService userService;
+
+    @Reference(interfaceClass = BidInfoService.class,version = "1.0.0",timeout = 15000)
+    private BidInfoService bidInfoService;
+
+    @Reference(interfaceClass = IncomeRecordService.class,version = "1.0.0",timeout = 15000)
+    private IncomeRecordService incomeRecordService;
+
+    @Reference(interfaceClass = RechargeRecordService.class,version = "1.0.0",timeout = 15000)
+    private RechargeRecordService rechargeRecordService;
 
     @RequestMapping("/loan/page/login")
     public String login(HttpServletRequest request){
@@ -35,7 +53,9 @@ public class UserController {
         if (code.equals(captcha)){
             User user = userService.login(phone, password);
             if (user != null){
-                request.getSession().setAttribute(Constants.SESSION_USER,user);
+                User resultUser = userService.queryByPhone(phone);
+                request.getSession().setAttribute(Constants.SESSION_USER,resultUser);
+                System.out.println(user.getMoney());
                 return "";
             }else {
                 return "账户或密码错误";
@@ -105,7 +125,13 @@ public class UserController {
     @RequestMapping("/checkPhone")
     @ResponseBody
     public boolean checkPhone(String phone){
-        return userService.queryByPhone(phone);
+        User user = userService.queryByPhone(phone);
+        if (user == null){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
     @RequestMapping("/realName")
@@ -131,8 +157,19 @@ public class UserController {
     }
 
     @RequestMapping("/loan/myCenter")
-    public String goMyCenter(){
+    public String goMyCenter(Model model,HttpSession session){
+        User user = (User) session.getAttribute(Constants.SESSION_USER);
+        List<IncomeRecord> incomeRecordList = incomeRecordService.queryByUId(user.getId());
+        List<BidInfo> bidInfoList = bidInfoService.queryByUId(user.getId());
+        List<RechargeRecord> rechargeRecordList = rechargeRecordService.queryByUId(user.getId());
+
+        model.addAttribute("incomeRecordList",incomeRecordList);
+        model.addAttribute("bidInfoList",bidInfoList);
+        model.addAttribute("rechargeRecordList",rechargeRecordList);
+
         return "myCenter";
     }
+
+
 
 }

@@ -9,10 +9,18 @@
     <result column="bid_time" jdbcType="TIMESTAMP" property="bidTime" />
     <result column="bid_status" jdbcType="INTEGER" property="bidStatus" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
   </resultMap>
   <sql id="Base_Column_List">
     id, loan_id, uid, bid_money, bid_time, bid_status
   </sql>
+  <select id="selectByUId" resultMap="BaseResultMap">
+    select
+    b.id id, loan_id, uid, bid_money, bid_time, bid_status,l.product_name productName
+    from b_bid_info b inner join b_loan_info l
+    on b.loan_id = l.id
+    where uid = #{uId}
+  </select>
   <select id="selectByBidLoanId" resultMap="BaseResultMap">
     select phone,bid_money,bid_time
     from b_bid_info b inner join u_user u

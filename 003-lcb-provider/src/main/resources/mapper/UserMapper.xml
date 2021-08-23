@@ -10,6 +10,7 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
     <result column="header_image" jdbcType="VARCHAR" property="headerImage" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
   </resultMap>
   <sql id="Base_Column_List">
     id, phone, login_password, name, id_card, add_time, last_login_time, header_image
@@ -22,8 +23,9 @@
   </select>
   <select id="selectByPhone" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from u_user
+    u.id id, phone, login_password, name, id_card, add_time, last_login_time, header_image,a.available_money money
+    from u_user u left join u_finance_account a
+    on u.id = a.uid
     where phone = #{phone}
   </select>
   <select id="selectUserCount" resultType="long">

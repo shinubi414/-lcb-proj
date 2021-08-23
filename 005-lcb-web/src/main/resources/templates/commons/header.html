@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 //我要投资下拉
 $(function(){
 	$(".headBody .main-nav li:eq(1)").hover(function(){
@@ -7,6 +7,8 @@ $(function(){
 	},function(){
 	    $(this).children(".menu-drop").stop(false,true).hide();
 	});
+
+
 });
 </script>
 <!--页头start-->
@@ -50,11 +52,11 @@ $(function(){
 
                 <div th:if="${session.user != null}" class="logged">
                     <div class="userinfo-up">
-                        <a href="loan/myCenter" class="user-phone">13788889999</a><a href="/lcb/" class="user-vip" id="member">VIP1</a><i></i>
+                        <a th:href="@{/loan/myCenter}" class="user-phone" th:text="${session.user.phone}"></a><a href="/lcb/" class="user-vip" id="member">VIP1</a><i></i>
                     </div>
                     <div class="userinfo-drop-down" style="height: 0px;">
                         <div class="down-bk">
-                            <div class="user-balance">余额：<span id="frame_top">1000.00</span>元</div>
+                            <div class="user-balance">余额：<span id="frame_top" th:text="${session.user.money}">1000.00</span>元</div>
                             <ul class="quick-entry clearfix">
                                 <li class="icon-recharge"><a href="toRecharge.html"><i></i><span>充值</span></a></li>
                                 <li class="icon-invest" style="margin-left:85px;"><a href="loan/loan"><i></i><span>投资</span></a></li>

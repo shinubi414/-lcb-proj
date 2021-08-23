@@ -10,10 +10,18 @@
     <result column="income_date" jdbcType="DATE" property="incomeDate" />
     <result column="income_money" jdbcType="DOUBLE" property="incomeMoney" />
     <result column="income_status" jdbcType="INTEGER" property="incomeStatus" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
   </resultMap>
   <sql id="Base_Column_List">
     id, uid, loan_id, bid_id, bid_money, income_date, income_money, income_status
   </sql>
+  <select id="selectByUId" resultMap="BaseResultMap">
+    select
+    i.id id, uid, loan_id, bid_id, bid_money, income_date, income_money, income_status,l.product_name productName
+    from b_income_record i inner join b_loan_info l
+    on i.loan_id = l.id
+    where uid = #{uId}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

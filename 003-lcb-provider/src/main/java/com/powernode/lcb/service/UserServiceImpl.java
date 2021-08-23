@@ -106,13 +106,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean queryByPhone(String phone) {
+    public User queryByPhone(String phone) {
         User user = userMapper.selectByPhone(phone);
-        if (user != null) {
-            return false;
-        } else {
-            return true;
-        }
+        return user;
     }
 
     @Override

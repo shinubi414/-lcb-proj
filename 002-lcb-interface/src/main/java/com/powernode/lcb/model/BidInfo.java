@@ -18,6 +18,15 @@ public class BidInfo implements Serializable {
 
     private String phone;
 
+    private String productName;
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
     public String getPhone() {
         return phone;

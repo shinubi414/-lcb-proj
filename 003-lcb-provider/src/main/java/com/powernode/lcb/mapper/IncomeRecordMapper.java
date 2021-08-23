@@ -2,6 +2,8 @@ package com.powernode.lcb.mapper;
 
 import com.powernode.lcb.model.IncomeRecord;
 
+import java.util.List;
+
 public interface IncomeRecordMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface IncomeRecordMapper {
     int updateByPrimaryKeySelective(IncomeRecord record);
 
     int updateByPrimaryKey(IncomeRecord record);
+
+    List<IncomeRecord> selectByUId(int uId);
 }
