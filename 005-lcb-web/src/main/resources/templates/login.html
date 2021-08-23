@@ -25,29 +25,32 @@
       <div class="login-cnt clearfix">
         <div class="login-form">
 		     <h2>欢迎登录</h2>
-		     
 		     <div class="login-box clearfix" style="z-index:10;">
 		     <label>账号</label>
 		     	<input id="phone" name="phone" type="text" class="input_text" placeholder="请输入11位手机号码" maxlength="11"/>
+                 <div id="phoneErr" class="form-hint" style="display:none;z-index:90;"></div>
 		     </div>
 		     
 		     <div class="login-box clearfix" style="z-index:8; padding-bottom:0px;">
 		     <label>密码</label>
 		     	<input id="loginPassword" name="loginPassword" type="password" placeholder="请输入登录密码" class="input_text" maxlength="16"/>
+                 <div id="passwordErr" class="form-hint" style="display:none;z-index:90;"></div>
 		     </div>
 
 
 		     <div class="login-yzm">
 		     <div id="showCaptcha" class="yzm-box" style="display:block;">
 			 	<input id="captcha" type="text" class="yzm" placeholder="点击右侧图片可刷新"/>
-			 	<img th:src="@{/jcaptcha/captcha}" id="imgCode" style="cursor:pointer;border:0; display:inline;vertical-align:middle;"/>
+                 <div id="captchaErr" class="form-hint" style="display:none;z-index:90;"></div>
+			 	<img src="/lcb/jcaptcha/captcha" onclick="this.src='/lcb/jcaptcha/captcha?'+Math.random()" id="imgCode" style="cursor:pointer;border:0; display:inline;vertical-align:middle;"/>
 		     </div>
 		     <ul><li id="showId" style="color:red;font-size:12px;width:222px;margin-top:10px;margin-bottom:10px;line-height:18px;"></li></ul>
 		     </div>
 
 
 		     
-		     <div class="bn-login" id="loginId"><button onclick="Login()">登&nbsp;&nbsp;录</button></div>
+		     <div class="bn-login" id="loginId"><button id="login">登&nbsp;&nbsp;录</button></div>
+             <div id="loginMsg" style="text-align: center;color: red"></div>
     	</div>
     	
         <div class="login-right">

@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -108,5 +109,16 @@ public class UserServiceImpl implements UserService {
         }else {
             return true;
         }
+    }
+
+    @Override
+    public User login(String phone, String password) {
+        password = DigestUtils.md5Hex(password);
+        User user = userMapper.selectByPhoneAndPassword(phone, password);
+        if (user != null){
+            user.setLastLoginTime(new Date());
+            userMapper.updateByPrimaryKey(user);
+        }
+        return user;
     }
 }
