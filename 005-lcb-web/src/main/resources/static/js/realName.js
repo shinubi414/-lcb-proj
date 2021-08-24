@@ -34,6 +34,8 @@ $(function() {
 			var realName = $('#realName').val();
 			var idCard = $('#idCard').val();
 			var captcha = $('#captcha').val()
+			var status = $('#skip').attr("data")
+			console.log(status)
 			$.ajax({
 				url:"/lcb/doRealName",
 				type:"post",
@@ -42,7 +44,11 @@ $(function() {
 					if (data != "ok"){
 						alert(data)
 					} else {
-						window.location.href="/lcb/loan/page/login"
+						if (status != "1"){
+							window.location.href="/lcb/loan/page/login"
+						}else {
+							window.location.href="/lcb/loan/myCenter"
+						}
 					}
 				}
 			})

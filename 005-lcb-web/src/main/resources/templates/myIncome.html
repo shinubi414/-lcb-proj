@@ -49,59 +49,26 @@
                                 <span class="deal-money">投资金额(元)</span>
                                 <span class="deal-balance">收益状态</span>
                             </dt>
-                            <dd>
-                                <div class="deal-time">2017-02-01 12:12:33</div>
-                                <div class="deal-name">23.89</div>
-                                <div class="deal-type" style="width:120px">季度宝</div>
-                                <div class="deal-money">1000.0</div>
-                                <div class="deal-balance">收益已返</div>
+                            <dd th:each="incomeRecord:${incomeRecordList}">
+                                <div class="deal-time" th:text="${#dates.format(incomeRecord.incomeDate,'yyyy-MM-dd HH:mm:ss')}">2017-02-01 12:12:33</div>
+                                <div class="deal-name" th:text="${incomeRecord.incomeMoney}">23.89</div>
+                                <div class="deal-type" style="width:120px" th:text="${incomeRecord.productName}">季度宝</div>
+                                <div class="deal-money" th:text="${incomeRecord.bidMoney}">1000.0</div>
+                                <div class="deal-balance" th:text="${incomeRecord.incomeStatus == 1?'收益已返':'收益未返'}">收益已返</div>
                             </dd>
-                            <dd>
-                                <div class="deal-time">2017-02-01 12:12:33</div>
-                                <div class="deal-name">23.89</div>
-                                <div class="deal-type" style="width:120px">季度宝</div>
-                                <div class="deal-money">1000.0</div>
-                                <div class="deal-balance">收益已返</div>
-                            </dd>
-                            <dd>
-                                <div class="deal-time">2017-02-01 12:12:33</div>
-                                <div class="deal-name">23.89</div>
-                                <div class="deal-type" style="width:120px">季度宝</div>
-                                <div class="deal-money">1000.0</div>
-                                <div class="deal-balance">收益已返</div>
-                            </dd>
-                            <dd>
-                                <div class="deal-time">2017-02-01 12:12:33</div>
-                                <div class="deal-name">23.89</div>
-                                <div class="deal-type" style="width:120px">季度宝</div>
-                                <div class="deal-money">1000.0</div>
-                                <div class="deal-balance">收益已返</div>
-                            </dd>
-                            <dd>
-                                <div class="deal-time">2017-02-01 12:12:33</div>
-                                <div class="deal-name">23.89</div>
-                                <div class="deal-type" style="width:120px">季度宝</div>
-                                <div class="deal-money">1000.0</div>
-                                <div class="deal-balance">收益已返</div>
-                            </dd>
-                            <dd>
-                                <div class="deal-time">2016-10-12 15:19:53</div>
-                                <div class="deal-name">120.34</div>
-                                <div class="deal-type" style="width:120px">新手宝</div>
-                                <div class="deal-money">10000.0</div>
-                                <div class="deal-balance">收益未返</div>
-                            </dd>
+
                             &nbsp;&nbsp;
                             <div class="touzi_fenye" style="width:100%;text-align:center;">
-                                共21条3页　当前为第2页
-                                <a id="linkHomePage"
-                                   th:href="@{/loan/myIncome}">首页</a>
-                                <a id="linkPreviousPage"
-                                   th:href="@{/loan/myIncome}">上一页</a>
-                                <a id="linkNextPage"
-                                   th:href="@{/loan/myIncome}">下一页 </a>
-                                <a id="linkLastPage"
-                                   th:href="@{/loan/myIncome}">尾页</a>
+                                共[[${rows}]]条[[${pageCount}]]页　当前为第 [[${page}]] 页
+                                <a id="linkHomePage" th:href="@{/loan/myIncome(page=1)}">首页</a>
+
+                                <a th:id="linkPreviousPage" th:if="${page - 1 >= 1}" th:href="@{/loan/myIncome(page=${page - 1})}">上一页</a>
+                                <a th:id="linkPreviousPage" th:if="${page - 1 < 1}" href="javascript:void(0);">上一页</a>
+
+                                <a th:id="linkNextPage" th:if="${page + 1 <= pageCount}" th:href="@{/loan/myIncome(page=${page + 1})}">下一页 </a>
+                                <a th:id="linkNextPage" th:if="${page + 1 > pageCount}" href="javascript:void(0);">下一页 </a>
+
+                                <a id="linkLastPage" th:href="@{/loan/myIncome(page=${pageCount})}">尾页</a>
                             </div>
                         </dl>
                     </div>

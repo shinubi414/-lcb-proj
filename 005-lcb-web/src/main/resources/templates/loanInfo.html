@@ -110,10 +110,10 @@
             <dd>资金(元)：
             
 	            	<!-- 判断用户是否登录：未登录，显示登录连接 -->
-	            	<span style="font-size:18px;color:#ff6161;vertical-align:bottom;"><a th:href="@{/loan/page/login}">请登录</a></span>
+	            	<span style="font-size:18px;color:#ff6161;vertical-align:bottom;" th:if="${session.user == null}"><a th:href="@{/loan/page/login}">请登录</a></span>
 	        
 	            	<!-- 判断用户是否登录：已登录，显示可用余额 -->
-	           		<!--<span style="font-size:18px;color:#ff6161;vertical-align:bottom;">1,000,12 元</span>-->
+	           		<span th:if="${session.user != null}" style="font-size:18px;color:#ff6161;vertical-align:bottom;" th:text="${session.user.money}">1,000,12 元</span>
 	        
             </dd>
           </dl>

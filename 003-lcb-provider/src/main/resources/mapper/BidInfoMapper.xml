@@ -20,6 +20,14 @@
     from b_bid_info b inner join b_loan_info l
     on b.loan_id = l.id
     where uid = #{uId}
+    order by bid_time desc
+    limit #{startIndex},#{pageSize}
+  </select>
+  <select id="selectRows" resultType="int">
+    select
+    count(*)
+    from b_bid_info
+    where uid = #{uId}
   </select>
   <select id="selectByBidLoanId" resultMap="BaseResultMap">
     select phone,bid_money,bid_time

@@ -18,6 +18,14 @@
     <include refid="Base_Column_List" />
     from b_recharge_record
     where uid = #{uId}
+    order by recharge_time desc
+    limit #{startIndex},#{pageSize}
+  </select>
+  <select id="selectRows" resultType="int">
+    select
+    count(*)
+    from b_recharge_record
+    where uid = #{uId}
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

@@ -11,8 +11,10 @@ public interface BidInfoService {
 
     List<InvestTopVO> queryBidMoneyRank(int num);
 
-    List<BidInfo> queryByBidLoanId(int
-                                           loanId);
-    List<BidInfo> queryByUId(int uId);
+    List<BidInfo> queryByBidLoanId(int loanId);
+
+    List<BidInfo> queryByUId(int uId,int startIndex,int pageSize);
+
+    int queryRows(int uId);
 
 }

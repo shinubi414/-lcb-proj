@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface IncomeRecordService {
 
-    List<IncomeRecord> queryByUId(int uId);
+
+    List<IncomeRecord> queryByUId(int uId,int startIndex,int pageSize);
+
+    int queryRows(int uId);
 }

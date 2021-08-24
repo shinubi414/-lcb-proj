@@ -53,6 +53,7 @@ public class IndexController {
 
     @RequestMapping("/loan/loan")
     public String loan(Integer productTypeId,Integer page,Model model){
+        productTypeId = productTypeId == null?1:productTypeId;
         page = page == null?1:page;
         int pageSize = 9;
         int startIndex = (page - 1) * pageSize;

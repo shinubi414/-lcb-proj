@@ -1,6 +1,7 @@
 package com.powernode.lcb.mapper;
 
 import com.powernode.lcb.model.RechargeRecord;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public interface RechargeRecordMapper {
 
     int updateByPrimaryKey(RechargeRecord record);
 
-    List<RechargeRecord> selectByUId(int uId);
+    List<RechargeRecord> selectByUId(@Param("uId") int uId, @Param("startIndex") int startIndex, @Param("pageSize")int pageSize);
+
+    int selectRows(int uId);
 
 }

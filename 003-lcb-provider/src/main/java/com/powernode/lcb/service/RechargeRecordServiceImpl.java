@@ -17,7 +17,12 @@ public class RechargeRecordServiceImpl implements RechargeRecordService {
 
 
     @Override
-    public List<RechargeRecord> queryByUId(int uId) {
-        return rechargeRecordMapper.selectByUId(uId);
+    public List<RechargeRecord> queryByUId(int uId, int startIndex, int pageSize) {
+        return rechargeRecordMapper.selectByUId(uId,startIndex,pageSize);
+    }
+
+    @Override
+    public int queryRows(int uId) {
+        return rechargeRecordMapper.selectRows(uId);
     }
 }

@@ -8,6 +8,7 @@ import com.powernode.lcb.mapper.FinanceAccountMapper;
 import com.powernode.lcb.mapper.UserMapper;
 import com.powernode.lcb.model.FinanceAccount;
 import com.powernode.lcb.model.User;
+import com.sun.deploy.net.HttpRequest;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,7 +140,8 @@ public class UserServiceImpl implements UserService {
                 map.put("realName", realName);
                 map.put("appkey", appkey);
                 try {
-                    String result = HttpClientUtils.doPost("https://way.jd.com/hl/idcardcheck", map);
+//                    String result = HttpClientUtils.doPost("https://way.jd.com/hl/idcardcheck", map);
+                    String result = "{\"code\":\"10000\",\"charge\":false,\"remain\":0,\"msg\":\"查询成功\",\"result\":{\"error_code\":0,\"reason\":\"成功\",\"result\":{\"realname\":\"罗*\",\"idcard\":\"441781************\",\"isok\":true,\"IdCardInfor\":{\"province\":\"广东省\",\"city\":\"阳江市\",\"district\":\"阳春市\",\"area\":\"广东省阳江市阳春市\",\"sex\":\"男\",\"birthday\":\"1997-5-21\"}}},\"requestId\":\"22948364f3a84b99b717df3f3f03099c\"}";
                     JSONObject jsonObject = JSON.parseObject(result);
                     boolean flag = jsonObject.getJSONObject("result").getJSONObject("result").getBoolean("isok");
                     if (flag == false) {

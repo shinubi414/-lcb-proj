@@ -2,6 +2,7 @@ package com.powernode.lcb.mapper;
 
 import com.powernode.lcb.model.BidInfo;
 import com.powernode.lcb.model.InvestTopVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,5 +25,7 @@ public interface BidInfoMapper {
 
     List<BidInfo> selectByBidLoanId(int loanId);
 
-    List<BidInfo> selectByUId(int uId);
+    List<BidInfo> selectByUId(@Param("uId") int uId,@Param("startIndex") int startIndex,@Param("pageSize")int pageSize);
+
+    int selectRows(int uId);
 }

@@ -1,6 +1,7 @@
 package com.powernode.lcb.mapper;
 
 import com.powernode.lcb.model.IncomeRecord;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,7 @@ public interface IncomeRecordMapper {
 
     int updateByPrimaryKey(IncomeRecord record);
 
-    List<IncomeRecord> selectByUId(int uId);
+    List<IncomeRecord> selectByUId(@Param("uId") int uId, @Param("startIndex") int startIndex, @Param("pageSize")int pageSize);
+
+    int selectRows(int uId);
 }

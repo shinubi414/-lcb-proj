@@ -15,9 +15,15 @@ public class IncomeRecordServiceImpl implements IncomeRecordService {
     @Autowired
     IncomeRecordMapper incomeRecordMapper;
 
-    @Override
-    public List<IncomeRecord> queryByUId(int uId) {
 
-        return incomeRecordMapper.selectByUId(uId);
+
+    @Override
+    public List<IncomeRecord> queryByUId(int uId, int startIndex, int pageSize) {
+        return incomeRecordMapper.selectByUId(uId,startIndex,pageSize);
+    }
+
+    @Override
+    public int queryRows(int uId) {
+        return incomeRecordMapper.selectRows(uId);
     }
 }

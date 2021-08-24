@@ -54,70 +54,30 @@
                                 <span class="deal-money">充值金额(元)</span>
                                 <span class="deal-balance">充值状态</span>
                             </dt>
-                            <dd>
-                                <div class="deal-time">2016-09-18 10:23:11</div>
-                                <div class="deal-name">支付理财</div>
-                                <div class="deal-type" style="width:120px">充值</div>
-                                <div class="deal-money">100.0</div>
-                                <div class="deal-balance">
-                                    充值成功
+                            <dd th:each="rechargeRecord:${rechargeRecordList}">
+                                <div class="deal-time" th:text="${#dates.format(rechargeRecord.rechargeTime,'yyyy-MM-dd HH:mm:ss')}">2016-09-18 10:23:11</div>
+                                <div class="deal-name" th:text="${rechargeRecord.rechargeDesc}">支付理财</div>
+                                <div class="deal-type" style="width:120px" >充值</div>
+                                <div class="deal-money" th:text="${rechargeRecord.rechargeMoney}">100.0</div>
+                                <div class="deal-balance" th:switch="${rechargeRecord.rechargeStatus}">
+                                    <span th:case="1">充值成功</span>
+                                    <span th:case="0">充值中</span>
+                                    <span th:case="2">充值失败</span>
                                 </div>
                             </dd>
-                            <dd>
-                                <div class="deal-time">2016-09-18 10:23:11</div>
-                                <div class="deal-name">支付理财</div>
-                                <div class="deal-type" style="width:120px">充值</div>
-                                <div class="deal-money">100.0</div>
-                                <div class="deal-balance">
-                                    充值成功
-                                </div>
-                            </dd>
-                            <dd>
-                                <div class="deal-time">2016-09-18 10:23:11</div>
-                                <div class="deal-name">支付理财</div>
-                                <div class="deal-type" style="width:120px">充值</div>
-                                <div class="deal-money">100.0</div>
-                                <div class="deal-balance">
-                                    充值成功
-                                </div>
-                            </dd>
-                            <dd>
-                                <div class="deal-time">2016-09-18 10:23:11</div>
-                                <div class="deal-name">支付理财</div>
-                                <div class="deal-type" style="width:120px">充值</div>
-                                <div class="deal-money">100.0</div>
-                                <div class="deal-balance">
-                                    充值成功
-                                </div>
-                            </dd>
-                            <dd>
-                                <div class="deal-time">2016-09-18 10:23:11</div>
-                                <div class="deal-name">支付理财</div>
-                                <div class="deal-type" style="width:120px">充值</div>
-                                <div class="deal-money">100.0</div>
-                                <div class="deal-balance">
-                                    充值中
-                                </div>
-                            </dd>
-                            <dd>
-                                <div class="deal-time">2016-09-18 10:23:11</div>
-                                <div class="deal-name">支付理财</div>
-                                <div class="deal-type" style="width:120px">充值</div>
-                                <div class="deal-money">100.0</div>
-                                <div class="deal-balance">
-                                    充值失败
-                                </div>
-                            </dd>
+
                             <div class="touzi_fenye" style="width:100%; text-align:center;line-height:30px;">
-                                共10条2页　当前为第1页　
+                                共[[${rows}]]条[[${pageCount}]]页　当前为第 [[${page}]] 页　
                                 <a id="linkHomePage"
-                                   th:href="@{/loan/myRecharge}">首页</a>
-                                <a id="linkPreviousPage"
-                                   th:href="@{/loan/myRecharge}">上一页</a>
-                                <a id="linkNextPage"
-                                   th:href="@{/loan/myRecharge}">下一页 </a>
-                                <a id="linkLastPage"
-                                   th:href="@{/loan/myRecharge}">尾页</a>
+                                   th:href="@{/loan/myRecharge(page=1)}">首页</a>
+
+                                <a th:id="linkPreviousPage" th:if="${page - 1 >= 1}" th:href="@{/loan/myRecharge(page = ${page - 1})}">上一页</a>
+                                <a th:id="linkPreviousPage" th:if="${page - 1 < 1}" href="javascript:void(0);">上一页</a>
+
+                                <a th:id="linkNextPage" th:if="${page + 1 <= pageCount}" th:href="@{/loan/myRecharge(page = ${page + 1})}">下一页 </a>
+                                <a th:id="linkNextPage" th:if="${page + 1 > pageCount}" href="javascript:void(0);">下一页 </a>
+
+                                <a id="linkLastPage" th:href="@{/loan/myRecharge(page=${pageCount})}">尾页</a>
                             </div>
                         </dl>
                     </div>

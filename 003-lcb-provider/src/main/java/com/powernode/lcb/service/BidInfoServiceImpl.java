@@ -50,8 +50,14 @@ public class BidInfoServiceImpl implements  BidInfoService {
     }
 
     @Override
-    public List<BidInfo> queryByUId(int uId) {
-
-        return bidInfoMapper.selectByUId(uId);
+    public List<BidInfo> queryByUId(int uId, int startIndex, int pageSize) {
+        return bidInfoMapper.selectByUId(uId,startIndex,pageSize);
     }
+
+    @Override
+    public int queryRows(int uId) {
+        return bidInfoMapper.selectRows(uId);
+    }
+
+
 }

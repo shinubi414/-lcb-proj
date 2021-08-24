@@ -8,10 +8,7 @@ import com.powernode.lcb.model.BidInfo;
 import com.powernode.lcb.model.IncomeRecord;
 import com.powernode.lcb.model.RechargeRecord;
 import com.powernode.lcb.model.User;
-import com.powernode.lcb.service.BidInfoService;
-import com.powernode.lcb.service.IncomeRecordService;
-import com.powernode.lcb.service.RechargeRecordService;
-import com.powernode.lcb.service.UserService;
+import com.powernode.lcb.service.*;
 import org.apache.commons.codec.digest.MurmurHash3;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,9 +37,18 @@ public class UserController {
 
     @Reference(interfaceClass = RechargeRecordService.class,version = "1.0.0",timeout = 15000)
     private RechargeRecordService rechargeRecordService;
+    @Reference(interfaceClass = LoanInfoService.class,version = "1.0.0",timeout = 15000)
+    private LoanInfoService loanInfoService;
 
     @RequestMapping("/loan/page/login")
-    public String login(HttpServletRequest request){
+    public String login(Model model){
+        long count = userService.queryUserCount();
+        double money = bidInfoService.queryBidMoney();
+        double rate = loanInfoService.queryHistoryAvgRate();
+
+        model.addAttribute("rate",rate);
+        model.addAttribute("money",money);
+        model.addAttribute("count",count);
         return "login";
     }
 
@@ -55,7 +61,6 @@ public class UserController {
             if (user != null){
                 User resultUser = userService.queryByPhone(phone);
                 request.getSession().setAttribute(Constants.SESSION_USER,resultUser);
-                System.out.println(user.getMoney());
                 return "";
             }else {
                 return "账户或密码错误";
@@ -144,7 +149,12 @@ public class UserController {
     public String doRealName(String phone, String realName, String idCard, String captcha, HttpSession session){
         String code = (String) session.getAttribute("code");
         if (code.equals(captcha)){
-            return userService.realName(phone, realName, idCard);
+            String msg = userService.realName(phone, realName, idCard);
+            if ("ok".equals(msg)){
+                User user = userService.queryByPhone(phone);
+                session.setAttribute(Constants.SESSION_USER,user);
+            }
+            return msg;
         }else {
             return "验证码错误";
         }
@@ -159,9 +169,9 @@ public class UserController {
     @RequestMapping("/loan/myCenter")
     public String goMyCenter(Model model,HttpSession session){
         User user = (User) session.getAttribute(Constants.SESSION_USER);
-        List<IncomeRecord> incomeRecordList = incomeRecordService.queryByUId(user.getId());
-        List<BidInfo> bidInfoList = bidInfoService.queryByUId(user.getId());
-        List<RechargeRecord> rechargeRecordList = rechargeRecordService.queryByUId(user.getId());
+        List<IncomeRecord> incomeRecordList = incomeRecordService.queryByUId(user.getId(),0,5);
+        List<BidInfo> bidInfoList = bidInfoService.queryByUId(user.getId(),0,5);
+        List<RechargeRecord> rechargeRecordList = rechargeRecordService.queryByUId(user.getId(),0,5);
 
         model.addAttribute("incomeRecordList",incomeRecordList);
         model.addAttribute("bidInfoList",bidInfoList);
@@ -169,6 +179,8 @@ public class UserController {
 
         return "myCenter";
     }
+
+
 
 
 

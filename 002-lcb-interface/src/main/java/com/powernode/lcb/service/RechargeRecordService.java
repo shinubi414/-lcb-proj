@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface RechargeRecordService {
 
-    List<RechargeRecord> queryByUId(int uId);
+    List<RechargeRecord> queryByUId(int uId,int startIndex,int pageSize);
+
+    int queryRows(int uId);
 }

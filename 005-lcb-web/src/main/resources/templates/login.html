@@ -58,11 +58,11 @@
           <div class="top-txt">
 		          动力金融网，便捷的投资平台
 			<br/><br/>
-			加入动力金融网<br/>坐享12.7%历史年化收益
+			加入动力金融网<br/>坐享[[${rate}]]%历史年化收益
           </div>
            
           <div class="currently">
-          	平台用户数：<span id="user">--</span>位，累计成交额： <span id="gold">--</span>元
+          	平台用户数：<span id="user" th:text="${count}">--</span>位，累计成交额： <span id="gold" th:text="${money}">--</span>元
           </div>
           
           <div class="bn-reg" id="quickRegBtn">

@@ -1,6 +1,7 @@
 package com.powernode.lcb.service;
 
 import com.powernode.lcb.model.User;
+import com.sun.deploy.net.HttpRequest;
 
 public interface UserService {
 
@@ -16,6 +17,6 @@ public interface UserService {
 
     User login(String phone,String password);
 
-    String realName(String phone,String realName,String idCard);
+    String realName(String phone, String realName, String idCard);
 
 }
