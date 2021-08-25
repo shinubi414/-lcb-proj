@@ -21,11 +21,14 @@ public interface BidInfoMapper {
 
     double selectBidMoney();
 
-    List<InvestTopVO> selectBidMoneyRank(int num);
+//    List<InvestTopVO> selectBidMoneyRank(int num);
 
     List<BidInfo> selectByBidLoanId(int loanId);
 
     List<BidInfo> selectByUId(@Param("uId") int uId,@Param("startIndex") int startIndex,@Param("pageSize")int pageSize);
 
     int selectRows(int uId);
+
+    List<InvestTopVO> selectAllBidMoney();
+
 }

@@ -4,6 +4,7 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.powernode.lcb.common.constant.Constants;
+import com.powernode.lcb.common.constant.ResponseResult;
 import com.powernode.lcb.model.BidInfo;
 import com.powernode.lcb.model.IncomeRecord;
 import com.powernode.lcb.model.RechargeRecord;
@@ -178,6 +179,35 @@ public class UserController {
         model.addAttribute("rechargeRecordList",rechargeRecordList);
 
         return "myCenter";
+    }
+
+    @RequestMapping("/checkLogin")
+    @ResponseBody
+    public ResponseResult checkLoginStatus(double bidMoney,HttpSession session){
+        User user = (User) session.getAttribute(Constants.SESSION_USER);
+        ResponseResult responseResult = new ResponseResult();
+        if (user == null){
+            responseResult.setCode(Constants.STATUS_ERROR_LOGIN);
+            responseResult.setMsg("未登录，请登录后进行投资");
+            return responseResult;
+        }else {
+            String name = user.getName();
+            if (name == null){
+                responseResult.setCode(Constants.STATUS_ERROR_REALNAME);
+                responseResult.setMsg("未实名，请实名后进行投资");
+                return responseResult;
+            }else {
+                double accountMoney = user.getMoney();
+                if (bidMoney > accountMoney){
+                    responseResult.setCode(Constants.STATUS_ERROR_MONRY);
+                    responseResult.setMsg("账户余额不足");
+                    return responseResult;
+                }else {
+                    responseResult.setCode(Constants.STATUS_OK);
+                    return responseResult;
+                }
+            }
+        }
     }
 
 

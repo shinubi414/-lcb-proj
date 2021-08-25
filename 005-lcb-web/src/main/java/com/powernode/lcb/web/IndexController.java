@@ -60,7 +60,7 @@ public class IndexController {
         List<LoanInfo> loanInfoList = loanInfoService.queryByProductTypeId(productTypeId,startIndex,pageSize);
         int rows = loanInfoService.queryRows(productTypeId);
         int pageCount = (int) Math.ceil((double)rows / pageSize);
-        List<InvestTopVO> investList = bidInfoService.queryBidMoneyRank(5);
+        List<InvestTopVO> investList = bidInfoService.queryBidMoneyRank();
 
         model.addAttribute("loanInfoList",loanInfoList);
         model.addAttribute("rows",rows);

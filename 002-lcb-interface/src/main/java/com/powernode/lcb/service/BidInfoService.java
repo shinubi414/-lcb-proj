@@ -9,12 +9,16 @@ public interface BidInfoService {
 
     double queryBidMoney();
 
-    List<InvestTopVO> queryBidMoneyRank(int num);
+//    List<InvestTopVO> queryBidMoneyRank(int num);
 
     List<BidInfo> queryByBidLoanId(int loanId);
 
     List<BidInfo> queryByUId(int uId,int startIndex,int pageSize);
 
     int queryRows(int uId);
+
+    long addInvestRecordRedis();
+
+    List<InvestTopVO> queryBidMoneyRank();
 
 }

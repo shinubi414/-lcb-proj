@@ -36,13 +36,19 @@
     where loan_id = #{loanId}
     order by bid_time
   </select>
-  <select id="selectBidMoneyRank" resultType="com.powernode.lcb.model.InvestTopVO">
+  <select id="selectAllBidMoney" resultType="com.powernode.lcb.model.InvestTopVO">
     select phone,SUM(bid_money) money
     from b_bid_info b inner join u_user u
     on b.uid = u.id
     GROUP BY b.uid
-    limit #{num}
   </select>
+  <!--<select id="selectBidMoneyRank" resultType="com.powernode.lcb.model.InvestTopVO">-->
+    <!--select phone,SUM(bid_money) money-->
+    <!--from b_bid_info b inner join u_user u-->
+    <!--on b.uid = u.id-->
+    <!--GROUP BY b.uid-->
+    <!--limit #{num}-->
+  <!--</select>-->
   <select id="selectBidMoney" resultType="double">
     select count(bid_money) from b_bid_info
   </select>

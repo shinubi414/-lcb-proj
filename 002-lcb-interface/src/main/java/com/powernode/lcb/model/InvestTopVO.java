@@ -6,6 +6,14 @@ public class InvestTopVO implements Serializable {
     private String phone;
     private double money;
 
+    public InvestTopVO() {
+    }
+
+    public InvestTopVO(String phone, double money) {
+        this.phone = phone;
+        this.money = money;
+    }
+
     public String getPhone() {
         return phone;
     }

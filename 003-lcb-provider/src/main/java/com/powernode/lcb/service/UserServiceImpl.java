@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -69,7 +70,7 @@ public class UserServiceImpl implements UserService {
             String returnStatus = jsonObject.getJSONObject("result").getString("ReturnStatus");
             System.out.println(returnStatus);
             if ("Success".equals(returnStatus)) {
-                redisTemplate.setKeySerializer(new StringRedisSerializer());
+               //redisTemplate.setKeySerializer(new StringRedisSerializer());
                 redisTemplate.opsForValue().set(phone, code, 1, TimeUnit.MINUTES);
                 result = "success";
             } else {
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkSmsCode(String phone, String code) {
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        //redisTemplate.setKeySerializer(new StringRedisSerializer());
         String smsCode = (String) redisTemplate.opsForValue().get(phone);
         if (smsCode == null || !code.equals(smsCode)) {
             return false;
@@ -167,4 +168,5 @@ public class UserServiceImpl implements UserService {
         }
         return "系统繁忙，请稍后重试";
     }
+
 }

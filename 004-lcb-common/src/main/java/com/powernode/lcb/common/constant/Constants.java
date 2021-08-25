@@ -51,4 +51,11 @@ public class Constants {
      * 唯一数字
      */
     public static final String ONLY_NUMBER = "onlyNumber";
+
+    public static final int STATUS_OK = 2000;  //成功
+    public static final int STATUS_ERROR = 2001; //发生错误
+    public static final int STATUS_ERROR_LOGIN = 2002;  //未登录
+    public static final int STATUS_ERROR_REALNAME = 2003;  //未实名
+    public static final int STATUS_ERROR_MONRY = 2004;  //账户金额不足
+
 }

@@ -29,6 +29,7 @@
       <!-- 产品详情start -->
       <div class="pro-info-details">
         <div class="pro-name">
+            <input id="id" type="hidden" th:value="${loanInfo.id}"/>
           <h2><span th:text="|${loanInfo.productName}(${#dates.format(loanInfo.releaseTime,'yyyyMMdd')}期)|">季度宝 (20170726期)</span></h2>
         </div>
         <div class="pro-info">
@@ -110,20 +111,21 @@
             <dd>资金(元)：
             
 	            	<!-- 判断用户是否登录：未登录，显示登录连接 -->
-	            	<span style="font-size:18px;color:#ff6161;vertical-align:bottom;" th:if="${session.user == null}"><a th:href="@{/loan/page/login}">请登录</a></span>
+	            	<span  style="font-size:18px;color:#ff6161;vertical-align:bottom;" th:if="${session.user == null}"><a th:href="@{/loan/page/login}">请登录</a></span>
 	        
 	            	<!-- 判断用户是否登录：已登录，显示可用余额 -->
-	           		<span th:if="${session.user != null}" style="font-size:18px;color:#ff6161;vertical-align:bottom;" th:text="${session.user.money}">1,000,12 元</span>
+	           		<span  th:if="${session.user != null}"  style="font-size:18px;color:#ff6161;vertical-align:bottom;" th:text="${session.user.money}">1,000,12 元</span>
 	        
             </dd>
           </dl>
-          <div class="expect-box">
+          <div class="expect-box" >
             <div class="expect-money">预计本息收入(元)：<span id="shouyi" class="money"></span><span class="prompt" style="display:block;">请在下方输入投资金额</span></div>
-            <input type="text" id="bidMoney" name="bidMoney" onblur="checkMoney();" placeholder="请输入投资金额，应为100元的整倍数" maxlength="9"/>
+            <input type="text" id="bidMoney"  name="bidMoney" placeholder="请输入投资金额，应为100元的整倍数" maxlength="9"/>
+              <div id="bidMoneyErr" style="z-index:90;color: red"></div>
             <div class="max-invest-money"></div>
           </div>
           <div class="invest-btn">
-          	<a id="investNow" href="javascript:void(0)" class="btn-1" onclick="invest();">立即投资</a>
+          	<a id="investNow" href="javascript:void(0)" class="btn-1" >立即投资</a>
           </div>
           <input type="hidden" id="loanId" name="loanId" value="${loanInfo.id}"/>
         </div>
@@ -146,17 +148,110 @@
   <div style="background:#f2f2f2; line-height:105px;text-align:center;"><font style="font-size:25px;">投资成功</font></div>
 </div>
 <!--投资成功浮层end-->
-
+<span th:text="${loanInfo.productStatus}"></span>
 <!--页脚start-->
 <jsp:include page="commons/footer.jsp"/>
 <!--页脚end-->
-
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 function closeit() {
 	$("#failurePayment").hide();
 	$("#dialog-overlay1").hide();
 	window.location.href="${pageContext.request.contextPath}/loan/myCenter";
 }
+
+
+$(function () {
+
+    $('#bidMoney').on('input',function () {
+        checkMoney()
+    })
+
+    $('#investNow').click(function () {
+        var bidMoney = $('#bidMoney').val()
+        var loanInfoId = $('#id').val()
+        if (checkMoney() && checkLoginAndMoney()) {
+            $.ajax({
+                url:"/lcb/loan/page/invest",
+                type:"get",
+                data:{bidMoney:bidMoney,loanInfoId:loanInfoId},
+                dataType:"json",
+                success:function (data) {
+                    if (data.code == 2000){
+                        alert(data.msg)
+                        window.location.reload()
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            })
+        }
+    })
+
+
+})
+
+function checkMoney() {
+    var bidMoney = $('#bidMoney').val()
+    var bidMinLimit = [[${loanInfo.bidMinLimit}]]
+    var bidMaxLimit = [[${loanInfo.bidMaxLimit}]]
+    var productStatus = [[${loanInfo.productStatus}]]
+    $('#shouyi').html("")
+    $('#bidMoneyErr').html("")
+    if (/^[ ]*$/.test(bidMoney) || bidMoney == ""){
+        $('#bidMoneyErr').html("投资金额不能为空")
+        return false
+    }else if ( !/^\d+$/.test(bidMoney)){
+        $('#bidMoneyErr').html("投资金额应为大于 0 的整数")
+        return false
+    }else if ( bidMoney % 100 != 0){
+        $('#bidMoneyErr').html("投资金额应为100元的整倍数")
+        return false
+    }else if (bidMoney < bidMinLimit) {
+        $('#bidMoneyErr').html("投资金额不能小于" + bidMinLimit)
+        return false
+    }else if (bidMoney > bidMaxLimit){
+        $('#bidMoneyErr').html("投资金额不能大于" + bidMaxLimit)
+        return false
+    } else if(productStatus > 0){
+        $('#bidMoneyErr').html("当前产品已满标")
+        return false
+    } else{
+        var rate = [[${loanInfo.rate}]]
+        var cycle =  [[${loanInfo.cycle}]]
+        var income = (bidMoney * (rate /100 / 365) * cycle).toFixed(2)
+        $('#shouyi').html(income)
+        return true
+    }
+}
+
+function checkLoginAndMoney() {
+    var flag = false;
+    var bidMoney = $('#bidMoney').val()
+    $.ajax({
+        url:"/lcb/checkLogin",
+        type:"get",
+        data:{bidMoney:bidMoney},
+        async: false,
+        dataType:"json",
+        success:function (data) {
+            if (data.code == 2002){
+                if (confirm("未登录无法进行投资，前往登录？")) {
+                    window.location.href="/lcb/loan/page/login"
+                }
+            } else if (data.code == 2003) {
+                if (confirm("未实名无法进行投资，前往实名？")) {
+                    window.location.href="/lcb/realName"
+                }
+            }else if (data.code == 2004) {
+                $('#bidMoneyErr').html("余额不足")
+            }else {
+                flag = true;
+            }
+        }
+    })
+     return flag;
+}
+
 </script>
 </body>
 </html>
