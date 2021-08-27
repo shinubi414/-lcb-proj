@@ -24,4 +24,6 @@ public interface LoanInfoMapper {
 
     int selectRows(int productTypeId);
 
+    List<LoanInfo> selectByProductStatus(int productStatus);
+
 }

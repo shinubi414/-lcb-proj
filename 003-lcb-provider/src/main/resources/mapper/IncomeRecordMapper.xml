@@ -15,6 +15,12 @@
   <sql id="Base_Column_List">
     id, uid, loan_id, bid_id, bid_money, income_date, income_money, income_status
   </sql>
+  <select id="selectByIncomeStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from b_income_record
+    where income_status = #{incomeStatus}
+  </select>
   <select id="selectByUId" resultMap="BaseResultMap">
     select
     i.id id, uid, loan_id, bid_id, bid_money, income_date, income_money, income_status,l.product_name productName

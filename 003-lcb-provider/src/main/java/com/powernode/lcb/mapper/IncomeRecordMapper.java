@@ -21,4 +21,6 @@ public interface IncomeRecordMapper {
     List<IncomeRecord> selectByUId(@Param("uId") int uId, @Param("startIndex") int startIndex, @Param("pageSize")int pageSize);
 
     int selectRows(int uId);
+
+    List<IncomeRecord> selectByIncomeStatus(int incomeStatus);
 }

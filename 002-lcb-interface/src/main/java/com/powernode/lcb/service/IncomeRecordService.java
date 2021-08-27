@@ -10,4 +10,6 @@ public interface IncomeRecordService {
     List<IncomeRecord> queryByUId(int uId,int startIndex,int pageSize);
 
     int queryRows(int uId);
+
+    int incomePlan();
 }

@@ -30,7 +30,7 @@
     where uid = #{uId}
   </select>
   <select id="selectByBidLoanId" resultMap="BaseResultMap">
-    select phone,bid_money,bid_time
+    select b.id id,loan_id,uid,phone,bid_money,bid_time,bid_status
     from b_bid_info b inner join u_user u
     on b.uid = u.id
     where loan_id = #{loanId}

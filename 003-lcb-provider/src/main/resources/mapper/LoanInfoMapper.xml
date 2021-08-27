@@ -23,6 +23,12 @@
     left_product_money, bid_min_limit, bid_max_limit, product_status, product_full_time, 
     product_desc, version
   </sql>
+  <select id="selectByProductStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from b_loan_info
+    where product_status = #{productStatus}
+  </select>
   <select id="selectByProductTypeId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
