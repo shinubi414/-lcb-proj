@@ -26,4 +26,6 @@ public interface RechargeRecordMapper {
 
     int selectRows(int uId);
 
+    List<RechargeRecord> selectByRechargeStatus(@Param("rechargeStatus") String rechargeStatus);
+
 }

@@ -13,6 +13,12 @@
   <sql id="Base_Column_List">
     id, uid, recharge_no, recharge_status, recharge_money, recharge_time, recharge_desc
   </sql>
+  <select id="selectByRechargeStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from b_recharge_record
+    where recharge_status = #{rechargeStatus}
+  </select>
   <select id="selectByRechargeNo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

@@ -39,7 +39,7 @@ public class DealServiceImpl implements DealService {
         }
         int count = loanInfoMapper.updateByPrimaryKey(loanInfo);
         //更新账户信息
-        FinanceAccount financeAccount = financeAccountMapper.selectByPrimaryKey(user.getId());
+        FinanceAccount financeAccount = financeAccountMapper.selectByUId(user.getId());
         financeAccount.setAvailableMoney(financeAccount.getAvailableMoney() - bidMoney);
         count += financeAccountMapper.updateByPrimaryKey(financeAccount);
         //添加投资记录

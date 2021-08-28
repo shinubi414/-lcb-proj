@@ -144,6 +144,8 @@ public class DealController {
                             FinanceAccount financeAccount = financeAccountService.queryByUId(user.getId());
                             financeAccount.setAvailableMoney(financeAccount.getAvailableMoney() + Double.parseDouble(total_amount));
                             financeAccountService.updateById(financeAccount);
+                            //更新session
+                            request.getSession().setAttribute(Constants.SESSION_USER,userService.queryByPhone(user.getPhone()));
 
                             model.addAttribute("trade_msg","充值成功");
                             model.addAttribute("out_trade_no",out_trade_no);

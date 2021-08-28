@@ -16,5 +16,6 @@ public interface RechargeRecordService {
 
     RechargeRecord queryByRechargeNo(String rechargeNo);
 
+    int outOrder();
 
 }

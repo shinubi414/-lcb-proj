@@ -2,6 +2,7 @@ package com.powernode.lcb.scheduretask;
 
 import com.powernode.lcb.service.FinanceAccountService;
 import com.powernode.lcb.service.IncomeRecordService;
+import com.powernode.lcb.service.RechargeRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,6 +16,8 @@ public class SpringScheduledTask {
     IncomeRecordService incomeRecordService;
     @Autowired
     FinanceAccountService financeAccountService;
+    @Autowired
+    RechargeRecordService rechargeRecordService;
 
     //@Scheduled(cron = "0 42 * * * ?")
     public void generateIncomePlan(){
@@ -35,4 +38,19 @@ public class SpringScheduledTask {
             System.out.println("回款失败");
         }
     }
+
+    //@Scheduled(cron = "0 43 * * * ?")
+    public void outOder(){
+        int count = rechargeRecordService.outOrder();
+        if(count > 0){
+            System.out.println("掉单处理完成");
+        }else {
+            System.out.println("掉单处理失败");
+        }
+
+    }
+
+
+
+
 }

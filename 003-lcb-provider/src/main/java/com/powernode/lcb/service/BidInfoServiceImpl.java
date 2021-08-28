@@ -41,18 +41,8 @@ public class BidInfoServiceImpl implements  BidInfoService {
     @Override
     public List<BidInfo> queryByBidLoanId(int loanId) {
 
-        List<BidInfo> bidInfoList = redisTemplate.opsForList().range("BidInfoRecord" + loanId, 0, -1);
-        if (bidInfoList.size() == 0){
-            synchronized (this){
-                bidInfoList = redisTemplate.opsForList().range("BidInfoRecord" + loanId, 0, -1);
-                if (bidInfoList.size() == 0){
-                    bidInfoList = bidInfoMapper.selectByBidLoanId(loanId);
-                    if (bidInfoList.size() != 0) {
-                        redisTemplate.opsForList().leftPushAll("BidInfoRecord" + loanId, bidInfoList);
-                    }
-                }
-            }
-        }
+        List<BidInfo> bidInfoList = bidInfoMapper.selectByBidLoanId(loanId);
+
         return bidInfoList;
     }
 
