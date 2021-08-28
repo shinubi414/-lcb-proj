@@ -14,9 +14,13 @@ public interface RechargeRecordMapper {
 
     RechargeRecord selectByPrimaryKey(Integer id);
 
+    RechargeRecord selectByRechargeNo(@Param("rechargeNo") String rechargeNo);
+
     int updateByPrimaryKeySelective(RechargeRecord record);
 
     int updateByPrimaryKey(RechargeRecord record);
+
+    int updateByRechargeNo(RechargeRecord rechargeRecord);
 
     List<RechargeRecord> selectByUId(@Param("uId") int uId, @Param("startIndex") int startIndex, @Param("pageSize")int pageSize);
 

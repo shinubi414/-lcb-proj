@@ -7,8 +7,6 @@ import com.powernode.lcb.mapper.IncomeRecordMapper;
 import com.powernode.lcb.model.FinanceAccount;
 import com.powernode.lcb.model.IncomeRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,5 +43,15 @@ public class FinanceAccountServiceImpl implements FinanceAccountService {
             }
         }
         return count;
+    }
+
+    @Override
+    public FinanceAccount queryByUId(int uId) {
+        return financeAccountMapper.selectByUId(uId);
+    }
+
+    @Override
+    public int updateById(FinanceAccount financeAccount) {
+        return financeAccountMapper.updateByPrimaryKeySelective(financeAccount);
     }
 }

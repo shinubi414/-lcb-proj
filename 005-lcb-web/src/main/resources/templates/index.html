@@ -136,7 +136,8 @@
                     </div>
                     <div class="pro-intr"><p th:text="${excellentProduct.productDesc}">优选计划项目，投资回报周期1个月，起点低，适合短期资金周转、对流动性要求高的投资人。</p></div>
                     <div class="pro-btn">
-                        <a th:href="@{'/loan/loanInfo/' + ${excellentProduct.id}}" class="btn-1">立即投资</a>
+                        <a th:if="${excellentProduct.leftProductMoney!=0}" th:href="@{'/loan/loanInfo/' + ${excellentProduct.id}}" class="btn-1">立即投资</a>
+                        <a th:if="${excellentProduct.leftProductMoney==0}" href="avascript:void(0);" class="btn-1">立即投资</a>
                     </div>
                 </div>
             </div>
@@ -175,7 +176,8 @@
                         </div>
                     </div>
                     <div class="pro-btn">
-                        <a th:href="@{'/loan/loanInfo/'+ ${looseMarkProduct.id}}" class="btn-1">立即投资</a>
+                        <a th:if="${looseMarkProduct.leftProductMoney != 0}" th:href="@{'/loan/loanInfo/'+ ${looseMarkProduct.id}}" class="btn-1">立即投资</a>
+                        <a th:if="${looseMarkProduct.leftProductMoney == 0}" href="javascript:void(0);" class="btn-1">立即投资</a>
                     </div>
                 </div>
             </div>

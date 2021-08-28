@@ -9,4 +9,12 @@ public interface RechargeRecordService {
     List<RechargeRecord> queryByUId(int uId,int startIndex,int pageSize);
 
     int queryRows(int uId);
+
+    int addRechargeRecord(RechargeRecord rechargeRecord);
+
+    int modifByRechargeNo(RechargeRecord rechargeRecord);
+
+    RechargeRecord queryByRechargeNo(String rechargeNo);
+
+
 }

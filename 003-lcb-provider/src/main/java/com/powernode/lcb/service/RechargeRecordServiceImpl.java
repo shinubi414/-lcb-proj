@@ -25,4 +25,21 @@ public class RechargeRecordServiceImpl implements RechargeRecordService {
     public int queryRows(int uId) {
         return rechargeRecordMapper.selectRows(uId);
     }
+
+    @Override
+    public int addRechargeRecord(RechargeRecord rechargeRecord) {
+        return rechargeRecordMapper.insert(rechargeRecord);
+    }
+
+    @Override
+    public int modifByRechargeNo(RechargeRecord rechargeRecord) {
+        return rechargeRecordMapper.updateByRechargeNo(rechargeRecord);
+    }
+
+    @Override
+    public RechargeRecord queryByRechargeNo(String rechargeNo) {
+        return rechargeRecordMapper.selectByRechargeNo(rechargeNo);
+    }
+
+
 }

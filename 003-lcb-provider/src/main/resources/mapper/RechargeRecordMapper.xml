@@ -13,6 +13,12 @@
   <sql id="Base_Column_List">
     id, uid, recharge_no, recharge_status, recharge_money, recharge_time, recharge_desc
   </sql>
+  <select id="selectByRechargeNo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from b_recharge_record
+    where recharge_no = #{rechargeNo}
+  </select>
   <select id="selectByUId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -45,6 +51,7 @@
       #{rechargeStatus,jdbcType=VARCHAR}, #{rechargeMoney,jdbcType=DOUBLE}, #{rechargeTime,jdbcType=TIMESTAMP}, 
       #{rechargeDesc,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.powernode.lcb.model.RechargeRecord">
     insert into b_recharge_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -117,6 +124,16 @@
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByRechargeNo" parameterType="com.powernode.lcb.model.RechargeRecord">
+    update b_recharge_record
+    set uid = #{uid,jdbcType=INTEGER},
+      recharge_no = #{rechargeNo,jdbcType=VARCHAR},
+      recharge_status = #{rechargeStatus,jdbcType=VARCHAR},
+      recharge_money = #{rechargeMoney,jdbcType=DOUBLE},
+      recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},
+      recharge_desc = #{rechargeDesc,jdbcType=VARCHAR}
+    where recharge_no = #{rechargeNo}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.powernode.lcb.model.RechargeRecord">
     update b_recharge_record

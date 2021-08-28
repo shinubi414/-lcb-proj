@@ -48,7 +48,8 @@
 						</div>
 					</div>
 					<div class="pro-btn">
-						<a th:href="@{'/loan/loanInfo/' + ${loanInfo.id}}" class="btn-1">立即投资</a><!--已满标按钮-->
+						<a th:if="${loanInfo.leftProductMoney != 0}" th:href="@{'/loan/loanInfo/' + ${loanInfo.id}}" class="btn-1">立即投资</a>
+						<a th:if="${loanInfo.leftProductMoney == 0}" href="javascript:void(0);" class="btn-1">立即投资</a><!--已满标按钮-->
 					</div>
 				</div>
 			</div>
